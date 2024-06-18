@@ -22,12 +22,14 @@ class TrainTestSplit:
         ratio: float,
         *,
         shuffle: bool = False,
+        seed: int | None = None,
     ) -> None:
         if ratio < 0 or ratio > 1:
             message = "ratio must be between 0 and 1"
             raise ValueError(message)
         self.ratio = ratio
         self.shuffle = shuffle
+        self.seed = seed
 
     def split(
         self,
@@ -40,6 +42,7 @@ class TrainTestSplit:
             data,
             lengths=[pivot, len(data) - pivot],
             shuffle=self.shuffle,
+            seed=self.seed,
         )
         return Dataset(splits[0]), Dataset(splits[1])
 
@@ -49,8 +52,9 @@ def _split(
     lengths: Sequence[int],
     *,
     shuffle: bool = False,
+    seed: int | None = None,
 ) -> list[pl.DataFrame]:
-    shuffled_dataset = dataset.sample(fraction=1.0, shuffle=shuffle)
+    shuffled_dataset = dataset.sample(fraction=1.0, shuffle=shuffle, seed=seed)
 
     return [
         shuffled_dataset.slice(offset - length, length)

@@ -20,11 +20,11 @@ class RegressionTree(SupervisedLearner):
 
     def __init__(
         self,
-        *args: Any,
+        *,
         dot_graph_export_path: None | str = None,
         **kwargs: Any,
     ) -> None:
-        self.regressor = DecisionTreeRegressor(*args, **kwargs)
+        self.regressor = DecisionTreeRegressor(**kwargs)
         self.dot_graph_export_path = dot_graph_export_path
 
     @override
@@ -42,5 +42,6 @@ class RegressionTree(SupervisedLearner):
             export_graphviz(
                 self.regressor,
                 out_file=self.dot_graph_export_path,
+                feature_names=inputs.columns,
             )
         return SciKitModel(self.regressor, outputs.columns[0])
