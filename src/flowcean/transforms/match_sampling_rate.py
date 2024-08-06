@@ -91,9 +91,8 @@ class MatchSamplingRate(Transform):
         )
         debug_msg = (
             "Interpolating timeseries features: "
-            + str(self.feature_interpolation_map.keys())
-            + " using the timestamps of the reference feature "
-            + self.reference_feature_name
+            f"{self.feature_interpolation_map.keys()} using the timestamps of "
+            f"the and reference feature {self.reference_feature_name}"
         )
         logger.debug(debug_msg)
 
@@ -106,12 +105,9 @@ class MatchSamplingRate(Transform):
         reference_feature = (
             data.select(pl.col(self.reference_feature_name).explode())
             .unnest(cs.all())
-            .rename(
-                lambda name: self.reference_feature_name + "_" + name
-                if name != "time"
-                else name
-            )
+            .rename({"value": self.reference_feature_name + "_value"})
         )
+
         result = pl.concat(
             [
                 interpolate_feature(
