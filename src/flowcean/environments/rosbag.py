@@ -1,16 +1,28 @@
 """Loading data from rosbag topics."""
 
+from __future__ import annotations
+
+import logging
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Self, override
+from typing import TYPE_CHECKING, Callable, Self, Sequence, Union, override
 
+import pandas as pd
 import polars as pl
 from rosbags.dataframe import get_dataframe
 from rosbags.highlevel import AnyReader
+from rosbags.interfaces import Nodetype
 from rosbags.typesys import Stores, get_types_from_msg, get_typestore
 
 from flowcean.core.environment import OfflineEnvironment
 from flowcean.core.environment.base import NotLoadedError
+
+if TYPE_CHECKING:
+    from rosbags.highlevel import AnyReader
+
+    AttrValue = Union[str, bool, int, float, object]
+
+logger = logging.getLogger(__name__)
 
 
 class RosbagLoader(OfflineEnvironment):
@@ -47,7 +59,7 @@ class RosbagLoader(OfflineEnvironment):
         self,
         path: str | Path,
         topics: dict[str, list[str]],
-        msgpaths: list[str] = [],
+        msgpaths: list[str] | None = None,
     ) -> None:
         """Initialize the RosbagEnvironment.
 
@@ -56,6 +68,8 @@ class RosbagLoader(OfflineEnvironment):
             topics: Dictionary of topics to load (`topic: [keys]`).
             msgpaths: List of paths to additional message definitions.
         """
+        if msgpaths is None:
+            msgpaths = []
         self.path = Path(path)
         self.topics = topics
         self.data = None
@@ -67,14 +81,13 @@ class RosbagLoader(OfflineEnvironment):
             add_types.update(
                 get_types_from_msg(msgdef, guess_msgtype(msgpath))
             )
-            print(f"Added message type: {guess_msgtype(msgpath)}")
+            debug_msg = f"Added message type: {guess_msgtype(msgpath)}"
+            logger.debug(debug_msg)
         self.typestore.register(add_types)
 
     @override
     def load(self) -> Self:
-        with AnyReader(
-            [self.path], default_typestore=self.typestore
-        ) as reader:
+        with AnyReader([self.path]) as reader:
             features = [
                 read_timeseries(reader, topic, keys)
                 for topic, keys in self.topics.items()
@@ -104,9 +117,6 @@ def read_timeseries(
     Returns:
         Timeseries DataFrame.
     """
-    data_pandas = get_dataframe(reader, topic, keys)
-    print(data_pandas)
-    # print(data_pandas.applymap(rosmsg_to_dict))
     data = pl.from_pandas(
         get_dataframe(reader, topic, keys).reset_index(names="time"),
     )

@@ -27,7 +27,7 @@ def main() -> None:
             # "/j100_0000/sensors/lidar3d_0/scan": [
             #     "ranges",
             # ],
-            "/j100_0000/particle_cloud": ["particles"],
+            "/j100_0000/particle_cloud": ["particles.pose.position.x"],
         },
         msgpaths=[
             "/opt/ros/humble/share/sensor_msgs/msg/Imu.msg",
