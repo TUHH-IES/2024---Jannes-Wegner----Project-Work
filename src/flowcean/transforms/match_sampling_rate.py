@@ -76,7 +76,13 @@ class MatchSamplingRate(Transform):
 
     @override
     def transform(self, data: pl.DataFrame) -> pl.DataFrame:
-        # preserve all constant columns that are not timeseries data
+        transformed_data = pl.DataFrame()
+        for i in range(len(data.rows())):
+            transformed_data_slice = self._transform_row(data.slice(i, 1))
+            transformed_data = transformed_data.vstack(transformed_data_slice)
+        return transformed_data
+
+    def _transform_row(self, data: pl.DataFrame) -> pl.DataFrame:
         non_timeseries_features = data.select(
             pl.exclude(
                 *self.feature_interpolation_map.keys(),
@@ -92,10 +98,11 @@ class MatchSamplingRate(Transform):
         logger.debug(debug_msg)
 
         if self.reference_feature_name not in data.columns:
-            msg = f"{self.reference_feature_name} not in the DataFrame."
+            msg = f"'{self.reference_feature_name}' not in the DataFrame."
             raise FeatureNotFoundError(msg)
 
         features = list(self.feature_interpolation_map.keys())
+
         reference_feature = (
             data.select(pl.col(self.reference_feature_name).explode())
             .unnest(cs.all())
