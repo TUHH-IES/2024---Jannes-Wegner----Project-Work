@@ -36,7 +36,7 @@ class TrainTestSplit:
         environment: OfflineEnvironment,
     ) -> tuple[Dataset, Dataset]:
         logger.info("Splitting data into train and test sets")
-        data = environment.get_data()
+        data = environment.observe()
         pivot = int(len(data) * self.ratio)
         splits = _split(
             data,
