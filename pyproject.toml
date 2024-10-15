@@ -47,7 +47,6 @@ grpc = [
 ]
 ros = [
   "rosbags",
-  "rosbags-dataframe",
 ]
 
 [tool.mypy]
