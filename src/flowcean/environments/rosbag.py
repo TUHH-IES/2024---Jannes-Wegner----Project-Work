@@ -3,24 +3,21 @@
 from __future__ import annotations
 
 import logging
-from collections.abc import Sequence
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, Self, Sequence, Union, override
+from typing import TYPE_CHECKING, Self, Union, override
 
-import pandas as pd
 import polars as pl
-from rosbags.dataframe import get_dataframe
 from rosbags.highlevel import AnyReader
-from rosbags.interfaces import Nodetype
 from rosbags.typesys import Stores, get_types_from_msg, get_typestore
 
 from flowcean.core.environment import OfflineEnvironment
 from flowcean.core.environment.base import NotLoadedError
+from flowcean.environments.dataframe import get_dataframe
 
 if TYPE_CHECKING:
-    from rosbags.highlevel import AnyReader
+    from collections.abc import Sequence
 
-    AttrValue = Union[str, bool, int, float, object]
+    AttrValue = Union[str, bool, int, float, object]  # noqa: UP007
 
 logger = logging.getLogger(__name__)
 
@@ -87,7 +84,9 @@ class RosbagLoader(OfflineEnvironment):
 
     @override
     def load(self) -> Self:
-        with AnyReader([self.path]) as reader:
+        with AnyReader(
+            [self.path], default_typestore=self.typestore
+        ) as reader:
             features = [
                 read_timeseries(reader, topic, keys)
                 for topic, keys in self.topics.items()
@@ -117,9 +116,7 @@ def read_timeseries(
     Returns:
         Timeseries DataFrame.
     """
-    data = pl.from_pandas(
-        get_dataframe(reader, topic, keys).reset_index(names="time"),
-    )
+    data = get_dataframe(reader, topic, keys)
     nest_into_timeseries = pl.struct(
         [
             pl.col("time"),

@@ -13,21 +13,21 @@ def main() -> None:
     environment = RosbagLoader(
         path="example_rosbag",
         topics={
-            # "/j100_0000/amcl_pose": [
-            #     "pose.pose.position.x",
-            #     "pose.pose.position.y",
-            # ],
-            # "/j100_0000/odometry": [
-            #     "pose.pose.position.x",
-            #     "pose.pose.position.y",
-            # ],
-            # "/j100_0000/sensors/imu_0/data_raw": [
-            #     "orientation_covariance",
-            # ],
-            # "/j100_0000/sensors/lidar3d_0/scan": [
-            #     "ranges",
-            # ],
-            "/j100_0000/particle_cloud": ["particles.pose.position.x"],
+            "/j100_0000/amcl_pose": [
+                "pose.pose.position.x",
+                "pose.pose.position.y",
+            ],
+            "/j100_0000/odometry": [
+                "pose.pose.position.x",
+                "pose.pose.position.y",
+            ],
+            "/j100_0000/sensors/imu_0/data_raw": [
+                "orientation_covariance",
+            ],
+            "/j100_0000/sensors/lidar3d_0/scan": [
+                "ranges",
+            ],
+            "/j100_0000/particle_cloud": ["particles"],
         },
         msgpaths=[
             "/opt/ros/humble/share/sensor_msgs/msg/Imu.msg",
