@@ -1,6 +1,7 @@
 import logging
 from typing import override
 
+import numpy as np
 import polars as pl
 import polars.selectors as cs
 
@@ -56,6 +57,7 @@ class MatchSamplingRate(Transform):
     |  {12:26:03.0, {4.8}}]       |  {12:26:03.0, {1.8}}]       |       |
 
     """
+
 
     def __init__(
         self,
