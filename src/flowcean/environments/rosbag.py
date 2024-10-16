@@ -12,7 +12,7 @@ from rosbags.typesys import Stores, get_types_from_msg, get_typestore
 
 from flowcean.core.environment import OfflineEnvironment
 from flowcean.core.environment.base import NotLoadedError
-from flowcean.environments.dataframe import get_dataframe
+from flowcean.environments.rosbags_dataframe import get_dataframe
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
