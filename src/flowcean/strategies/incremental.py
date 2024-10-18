@@ -1,25 +1,11 @@
-from abc import abstractmethod
-from collections.abc import Sequence
-from typing import Self
-
-from flowcean.core import (
-    IncrementalEnvironment,
-    Model,
-    ModelWithTransform,
-    SupervisedIncrementalLearner,
-    Transform,
-    UnsupervisedIncrementalLearner,
-)
+from flowcean.core.environment.incremental import IncrementalEnvironment
+from flowcean.core.learner import SupervisedIncrementalLearner
+from flowcean.core.model import Model, ModelWithTransform
+from flowcean.core.transform import FitIncremetally, Transform
 
 
-class WithFeatures:
-    @abstractmethod
-    def select(self, features: Sequence[str]) -> Self:
-        pass
-
-
-def learn_incremental[Observation: WithFeatures](
-    environment: IncrementalEnvironment[Observation],
+def learn_incremental(
+    environment: IncrementalEnvironment,
     learner: SupervisedIncrementalLearner,
     inputs: list[str],
     outputs: list[str],
@@ -47,9 +33,9 @@ def learn_incremental[Observation: WithFeatures](
         output_features = data.select(outputs)
 
         if input_transform is not None:
-            if isinstance(input_transform, UnsupervisedIncrementalLearner):
+            if isinstance(input_transform, FitIncremetally):
                 input_transform.fit_incremental(input_features)
-            input_features = input_transform.transform(input_features)
+            input_features = input_transform.apply(input_features)
 
         model = learner.learn_incremental(input_features, output_features)
 

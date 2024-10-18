@@ -52,7 +52,7 @@ class SupervisedIncrementalLearner(ABC):
         """
 
 
-class ActiveLearner[Action, Observation](ABC):
+class ActiveLearner(ABC):
     """Base class for active learners.
 
     Active learners require actions to be taken to learn.
@@ -61,8 +61,8 @@ class ActiveLearner[Action, Observation](ABC):
     @abstractmethod
     def learn_active(
         self,
-        action: Action,
-        observation: Observation,
+        action: pl.DataFrame,
+        observation: pl.DataFrame,
     ) -> Model:
         """Learn from actions and observations.
 
@@ -75,7 +75,7 @@ class ActiveLearner[Action, Observation](ABC):
         """
 
     @abstractmethod
-    def propose_action(self, observation: Observation) -> Action:
+    def propose_action(self, observation: pl.DataFrame) -> pl.DataFrame:
         """Propose an action based on an observation.
 
         Args:

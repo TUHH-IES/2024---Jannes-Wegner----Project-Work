@@ -62,6 +62,21 @@ class OfflineEnvironment(TransformedObservable):
         """Shorthand for `chain`."""
         return self.chain(other)
 
+    def as_stream(batch_size: int) -> StreamingOfflineEnvironment:
+        """Convert the offline environment to a streaming environment.
+
+        Args:
+            batch_size: The batch size of the streaming environment.
+
+        Returns:
+            The streaming environment.
+        """
+        from flowcean.core.environment.streaming import (
+            StreamingOfflineEnvironment,
+        )
+
+        return StreamingOfflineEnvironment(self, batch_size)
+
 
 class JoinedOfflineEnvironment(OfflineEnvironment):
     """Environment that joins multiple offline environments.

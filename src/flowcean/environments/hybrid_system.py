@@ -73,7 +73,7 @@ class HybridSystem[X: State, Input](IncrementalEnvironment):
         self.last_t = 0.0
 
     @override
-    def observe(self) -> pl.DataFrame:
+    def _observe(self) -> pl.DataFrame:
         return self.data
 
     @override

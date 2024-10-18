@@ -6,6 +6,7 @@ import lightning
 import polars as pl
 import torch
 from torch import Tensor
+from torch.optim.adam import Adam
 from torch.utils.data import DataLoader
 
 from flowcean.core.learner import SupervisedLearner
@@ -92,7 +93,7 @@ class MultilayerPerceptron(lightning.LightningModule):
     def configure_optimizers(
         self,
     ) -> Any:
-        optimizer = torch.optim.Adam(
+        optimizer = Adam(
             self.parameters(),
             lr=self.learning_rate,
         )
