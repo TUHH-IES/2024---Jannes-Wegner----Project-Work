@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "flowcean",
+# ]
+# ///
+
 import logging
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -52,7 +60,7 @@ class OneTank(OdeSystem[TankState]):
         area: float,
         outflow_rate: float,
         inflow_rate: float,
-        initial_t: float = 0,
+        initial_t: float = 0.0,
         initial_state: TankState,
     ) -> None:
         """Initialize the one tank system.
@@ -78,7 +86,7 @@ class OneTank(OdeSystem[TankState]):
         t: float,
         state: NDArray[np.float64],
     ) -> NDArray[np.float64]:
-        pump_voltage = np.max([0, np.sin(2 * np.pi * 1 / 10 * t)])
+        pump_voltage = np.max([0.0, np.sin(2.0 * np.pi * 1.0 / 10.0 * t)])
         tank = TankState.from_numpy(state)
         d_level = (
             self.inflow_rate * pump_voltage
@@ -91,10 +99,10 @@ def main() -> None:
     flowcean.cli.initialize_logging()
 
     system = OneTank(
-        area=5,
+        area=5.0,
         outflow_rate=0.5,
-        inflow_rate=2,
-        initial_state=TankState(water_level=1),
+        inflow_rate=2.0,
+        initial_state=TankState(water_level=1.0),
     )
 
     data_incremental = OdeEnvironment(

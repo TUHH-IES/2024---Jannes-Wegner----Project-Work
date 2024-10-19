@@ -18,6 +18,7 @@ class IntegrationError(Exception):
     """
 
     def __init__(self) -> None:
+        """Initialize the exception."""
         super().__init__("failed to integrate ODE")
 
 
@@ -149,7 +150,7 @@ class OdeEnvironment[X: State](IncrementalEnvironment):
         self,
         system: OdeSystem[X],
         *,
-        dt: float = 1,
+        dt: float = 1.0,
         map_to_dataframe: Callable[
             [Sequence[float], Sequence[X]],
             pl.DataFrame,

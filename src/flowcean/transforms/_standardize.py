@@ -1,7 +1,7 @@
 from typing import override
 
 import polars as pl
-from polars.type_aliases import PythonLiteral
+from polars._typing import PythonLiteral
 
 from flowcean.core.transform import FitOnce, Transform
 

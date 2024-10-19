@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from typing import override
 
 import polars as pl
-from polars.type_aliases import IntoExpr
+from polars._typing import IntoExpr
 
 from flowcean.core.transform import Transform
 

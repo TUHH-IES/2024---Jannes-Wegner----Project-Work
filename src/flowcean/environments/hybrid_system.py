@@ -71,6 +71,7 @@ class HybridSystem[X: State, Input](IncrementalEnvironment):
         self.inputs = inputs
         self.map_to_dataframe = map_to_dataframe
         self.last_t = 0.0
+        self.data = pl.DataFrame()
 
     @override
     def _observe(self) -> pl.DataFrame:

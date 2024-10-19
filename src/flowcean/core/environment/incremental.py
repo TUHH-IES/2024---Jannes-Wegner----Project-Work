@@ -25,6 +25,10 @@ class IncrementalEnvironment(
     and provide a stream of data. The data can be observed at each step.
     """
 
+    def __init__(self) -> None:
+        """Initialize the incremental environment."""
+        super().__init__()
+
     @override
     def __iter__(self) -> Iterator[pl.DataFrame]:
         yield self.observe()

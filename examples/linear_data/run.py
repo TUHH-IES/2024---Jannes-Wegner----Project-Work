@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "flowcean",
+# ]
+# ///
+
 import logging
 
 import polars as pl
@@ -37,7 +45,7 @@ def main() -> None:
     outputs = ["y"]
 
     model = learn_incremental(
-        train.as_stream(batch_size=1).load(),
+        train.as_stream(batch_size=1),
         learner,
         inputs,
         outputs,

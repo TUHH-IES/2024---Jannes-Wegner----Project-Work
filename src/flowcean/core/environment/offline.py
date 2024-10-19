@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
     from flowcean.core.environment.chained import ChainedOfflineEnvironments
+    from flowcean.environments.streaming import StreamingOfflineEnvironment
 
 
 class OfflineEnvironment(TransformedObservable):
@@ -62,7 +63,7 @@ class OfflineEnvironment(TransformedObservable):
         """Shorthand for `chain`."""
         return self.chain(other)
 
-    def as_stream(batch_size: int) -> StreamingOfflineEnvironment:
+    def as_stream(self, batch_size: int) -> StreamingOfflineEnvironment:
         """Convert the offline environment to a streaming environment.
 
         Args:
@@ -71,7 +72,7 @@ class OfflineEnvironment(TransformedObservable):
         Returns:
             The streaming environment.
         """
-        from flowcean.core.environment.streaming import (
+        from flowcean.environments.streaming import (
             StreamingOfflineEnvironment,
         )
 

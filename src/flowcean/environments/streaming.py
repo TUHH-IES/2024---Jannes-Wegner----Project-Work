@@ -29,6 +29,7 @@ class StreamingOfflineEnvironment(IncrementalEnvironment):
             environment: The offline environment to stream.
             batch_size: The batch size of the streaming environment.
         """
+        super().__init__()
         self.environment = environment
         self.batch_size = batch_size
 
