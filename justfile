@@ -13,22 +13,29 @@ test:
 examples: examples-alp examples-boiler examples-coffee_machine examples-failure_time_prediction examples-linear_data examples-one_tank examples-ros_offline
 
 examples-alp:
-  uv run --directory ./examples/automatic_lashing_platform/ --with-editable ../../ run.py
+  @echo "🚀 Running example: Automatic Lashing Platform"
+  @uv run --directory ./examples/automatic_lashing_platform/ --with-editable ../../ run.py
 
 examples-boiler:
-  uv run --directory ./examples/boiler/ --with-editable ../../ run.py
+  @echo "🚀 Running example: Boiler"
+  @uv run --directory ./examples/boiler/ --with-editable ../../ run.py
 
 examples-coffee_machine:
-  uv run --directory ./examples/coffee_machine/ --with-editable ../../ run.py
+  @echo "🚀 Running example: Coffee Machine"
+  @uv run --directory ./examples/coffee_machine/ --with-editable ../../ run.py
 
 examples-failure_time_prediction:
-  uv run --directory ./examples/failure_time_prediction/ --with-editable ../../ run.py
+  @echo "🚀 Running example: Failure Time Prediction"
+  @uv run --directory ./examples/failure_time_prediction/ --with-editable ../../ run.py
 
 examples-linear_data:
-  uv run --directory ./examples/linear_data/ --with-editable ../../ run.py
+  @echo "🚀 Running example: Linear Data"
+  @uv run --directory ./examples/linear_data/ --with-editable ../../ run.py
 
 examples-one_tank:
-  uv run --directory ./examples/one_tank/ --with-editable ../../ run.py
+  @echo "🚀 Running example: One Tank"
+  @uv run --directory ./examples/one_tank/ --with-editable ../../ run.py
 
 examples-ros_offline:
-  uv run --directory ./examples/ros_offline/ --with-editable ../../ run.py
+  @echo "🚀 Running example: ROS Offline"
+  @uv run --directory ./examples/ros_offline/ --with-editable ../../ run.py
