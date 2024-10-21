@@ -1,6 +1,13 @@
+setup:
+  @echo "🚀 Setting up development environment"
+  @uv sync
+  @uv run pre-commit install
+
 check:
   @echo "🚀 Checking lock file consistency with 'pyproject.toml'"
   @uv lock --locked
+  @echo "🚀 Checking code style: Running pre-commit"
+  @uv run pre-commit run --all-files
   @echo "🚀 Static type checking: Running pyright"
   @uv run pyright
   @echo "🚀 Checking for obsolete dependencies: Running deptry"
