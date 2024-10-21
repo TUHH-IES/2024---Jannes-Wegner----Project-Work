@@ -10,6 +10,14 @@ test:
   @echo "🚀 Testing code: Running pytest"
   @uv run python -m pytest --cov --cov-config=pyproject.toml
 
+docs:
+  @echo "🚀 Building documentation: Running mkdocs"
+  @uv run mkdocs build --strict
+
+docs-serve:
+  @echo "🚀 Serving documentation: Running mkdocs"
+  @uv run mkdocs serve
+
 examples: examples-alp examples-boiler examples-coffee_machine examples-failure_time_prediction examples-linear_data examples-one_tank examples-ros_offline
 
 examples-alp:
