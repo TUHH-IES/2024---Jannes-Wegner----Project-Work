@@ -131,6 +131,7 @@ def main() -> None:
         ),
     )
 
+    environment.step()
     data = environment.collect(10_000)
     train, test = TrainTestSplit(ratio=0.8).split(data)
 
