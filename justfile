@@ -15,7 +15,7 @@ check:
 
 test:
   @echo "🚀 Testing code: Running pytest"
-  @uv run python -m pytest --cov --cov-config=pyproject.toml
+  @uv run python -m pytest tests --cov --cov-config=pyproject.toml
 
 docs:
   @echo "🚀 Building documentation: Running mkdocs"
