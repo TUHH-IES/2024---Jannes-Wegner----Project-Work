@@ -18,6 +18,9 @@ jobs:
       - name: Set up the environment
         uses: ./.github/actions/setup-python-env
 
+      - name: Set up just
+        uses: extractions/setup-just@v1
+
       - name: Run checks
         run: just check
 
@@ -71,14 +74,20 @@ jobs:
 
       - name: Set up the environment
         uses: ./.github/actions/setup-python-env
-      - name: Setup DVC
+
+      - name: Set up DVC
         run: |
           dvc --version
           dvc remote modify --local tuhh-cloud password ${{ secrets.TUHH_CLOUD_DVC_SHARE_PASSWORD }}
           dvc config cache.dir $GITHUB_WORKSPACE/../dvc_cache
+
       - name: DVC pull
         run: |
           dvc pull --verbose --recursive examples/${{ matrix.example }}
+
+      - name: Set up just
+        uses: extractions/setup-just@v1
+
       - name: Run Example [${{ matrix.example }}]
         run: |
-          uv run --directory ./examples/${{ matrix.example }}/ --with-editable ../../ run.py
+          just examples-${{ matrix.example }}
