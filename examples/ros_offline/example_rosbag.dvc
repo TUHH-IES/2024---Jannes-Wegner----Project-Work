@@ -1,6 +1,0 @@
-outs:
-- md5: f613db08514312f5ca1ae2cbac88f5d0.dir
-  size: 907874049
-  nfiles: 2
-  hash: md5
-  path: example_rosbag
