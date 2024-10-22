@@ -32,6 +32,8 @@ def process_python_file(nav: Nav, py_file: Path) -> None:
     if module_parts[-1] == "__init__":
         module_parts = module_parts[:-1]
         doc_path = doc_path.with_name("index.md")
+    elif module_parts[-1].startswith("_"):
+        return
 
     nav[module_parts] = doc_path.as_posix()
     output_path = OUTPUT_DIR / doc_path
