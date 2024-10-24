@@ -2,6 +2,8 @@ __all__ = [
     "Explode",
     "FeatureLengthVaryError",
     "Flatten",
+    "NoCategoriesError",
+    "NoMatchingCategoryError",
     "NoTimeSeriesFeatureError",
     "MatchSamplingRate",
     "OneHot",
@@ -17,7 +19,7 @@ __all__ = [
 from .explode import Explode
 from .flatten import FeatureLengthVaryError, Flatten, NoTimeSeriesFeatureError
 from .match_sampling_rate import MatchSamplingRate
-from .one_hot import OneHot
+from .one_hot import NoCategoriesError, NoMatchingCategoryError, OneHot
 from .rechunk import Rechunk
 from .rename import Rename
 from .resample import Resample
